@@ -1,10 +1,14 @@
 <template>
     <div class="game-container">
+        <div class="fps-counter">
+            <span class="frame-time-label">Frame time: </span>
+            <span class="frame-time" id="frame-time">0</span>
+        </div>
         <div class="canvas-container" ref="canvas_container">
             <canvas v-bind:id="layer.name"
                     v-bind:height="layer.height"
                     v-bind:width="layer.width"
-                    v-bind:style="{ height: layer.height, width: layer.width, 'z-index': layer.zindex }"
+                    v-bind:style="{ height: layer.visible_height, width: '100%', 'z-index': layer.zindex }"
                     v-bind:key="layer.name"
                     class="graphics-layer"
                     v-for="layer in layers"/>
@@ -13,7 +17,7 @@
 </template>
 
 <script>
-    import { layers, scale } from '../game/game';
+    import { LAYERS, CONSTANTS, start_game_loop } from '../game/main';
 
     export default {
         name: "Game",
@@ -24,12 +28,26 @@
         },
         mounted: function () {
             const max_width = this.$refs.canvas_container.clientWidth;
-            layers.forEach((layer) => {
+            LAYERS.forEach((layer) => {
                 if (layer.size === 'auto') {
                     layer.width = max_width;
-                    layer.height = max_width / scale;
+                    layer.height = Math.floor(max_width / CONSTANTS.scale);
+                    layer.visible_height = layer.height;
                 }
                 this.layers.push(layer);
+            });
+
+            window.addEventListener('resize', () => {
+                const max_width = this.$refs.canvas_container.clientWidth;
+                this.layers.forEach((layer) => {
+                    if (layer.size === 'auto') {
+                        layer.visible_height = Math.floor(max_width / CONSTANTS.scale);
+                    }
+                });
+            });
+
+            this.$nextTick().then(() => {
+                start_game_loop(max_width)
             });
         }
     }
@@ -44,9 +62,21 @@
         height: 100%;
     }
 
-    .canvas-container {
-        width: 100%;
+    .fps-counter {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 
-    .graphics-layer {}
+    .canvas-container {
+        width: 100%;
+        position: relative;
+    }
+
+    .graphics-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 </style>

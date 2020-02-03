@@ -1,12 +1,22 @@
 TODO long-term
 ==============
+* gravity & collisions
+* controls
 
 TODO next
 =========
-* Auto-resize of canvas on container resize
+* base classes first version
+* game state storage
+* graphics implementation
 
-2020-01-23
-----------
+0.0.2 - 2020-02-03
+------------------
+* Auto-resize of canvas on window resize
+* Game loop and refresh rate
+* Fixed resolution scaled up to display resolution
+
+0.0.1 - 2020-01-23
+------------------
 * Initial structure
 * Layers config
 * Layers initialization
