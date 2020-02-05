@@ -5,11 +5,11 @@
             <span class="frame-time" id="frame-time">0</span>
         </div>
         <div class="canvas-container" ref="canvas_container">
-            <canvas v-bind:id="layer.name"
+            <canvas v-bind:id="layer.slug"
                     v-bind:height="layer.height"
                     v-bind:width="layer.width"
                     v-bind:style="{ height: layer.visible_height, width: '100%', 'z-index': layer.zindex }"
-                    v-bind:key="layer.name"
+                    v-bind:key="layer.slug"
                     class="graphics-layer"
                     v-for="layer in layers"/>
         </div>
@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import { LAYERS, CONSTANTS, start_game_loop } from '../game/main';
+    import { LAYERS, CONSTANTS, start_game } from '../game/main';
 
     export default {
         name: "Game",
@@ -47,13 +47,13 @@
             });
 
             this.$nextTick().then(() => {
-                start_game_loop(max_width)
+                start_game(max_width)
             });
         }
     }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
     .game-container {
         display: flex;
         flex-direction: column;
@@ -78,5 +78,9 @@
         position: absolute;
         top: 0;
         left: 0;
+
+        &:first-of-type {
+            position: relative;
+        }
     }
 </style>

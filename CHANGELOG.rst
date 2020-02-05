@@ -1,10 +1,13 @@
 TODO long-term
 ==============
 * gravity & collisions
-* controls
 
 TODO next
 =========
+* controls
+
+0.0.3 - 2020-02-05
+------------------
 * base classes first version
 * game state storage
 * graphics implementation

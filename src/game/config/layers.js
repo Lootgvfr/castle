@@ -1,13 +1,18 @@
 const LAYERS = [
     {
-        name: 'main',
+        slug: 'background',
         size: 'auto',
-        zindex: 100
+        zindex: 10
     },
     {
-        name: 'static',
+        slug: 'static',
         size: 'auto',
         zindex: 80
+    },
+    {
+        slug: 'main',
+        size: 'auto',
+        zindex: 100
     }
 ];
 
