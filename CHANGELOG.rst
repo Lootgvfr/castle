@@ -8,6 +8,11 @@ TODO next
 =========
 * collisions calculation
 
+0.0.5 - 2020-02-06
+------------------
+* create ground class
+* update state to load objects
+
 0.0.4 - 2020-02-06
 ------------------
 * controls for player

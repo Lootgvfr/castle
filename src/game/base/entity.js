@@ -40,14 +40,14 @@ class Entity {
         this.pos_x += (this.vel_x + this.input_vel_x) / CONSTANTS.updates_per_second;
         this.pos_y += (this.vel_y + this.input_vel_y) / CONSTANTS.updates_per_second;
         if (this.pos_x > CONSTANTS.width) {
-            this.pos_x = 0;
-        } else if (this.pos_x < 0) {
             this.pos_x = CONSTANTS.width;
+        } else if (this.pos_x < 0) {
+            this.pos_x = 0;
         }
         if (this.pos_y > CONSTANTS.height) {
-            this.pos_y = 0;
-        } else if (this.pos_y < 0) {
             this.pos_y = CONSTANTS.height;
+        } else if (this.pos_y < 0) {
+            this.pos_y = 0;
         }
     }
 

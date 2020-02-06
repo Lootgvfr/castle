@@ -5,7 +5,7 @@ class Player extends Entity {
     type = 'player';
     is_controllable = true;
     is_standing = true;
-    move_velocity = 100;
+    move_velocity = 200;
 
     constructor(
         {
@@ -16,8 +16,9 @@ class Player extends Entity {
         super(
             {
                 display_data: {
-                    width: 10,
-                    height: 30
+                    width: 15,
+                    height: 40,
+                    color: 'blue'
                 },
                 pos_x: pos_x,
                 pos_y: pos_y
@@ -33,7 +34,7 @@ class Player extends Entity {
     process_inputs() {
         if (this.is_controllable) {
             this.is_standing = !current_held_keys.has('KeyS');
-            this.display_data.height = this.is_standing ? 30: 20;
+            this.display_data.height = this.is_standing ? 40: 25;
 
             this.input_vel_x = 0;
             this.input_vel_y = 0;
@@ -45,6 +46,9 @@ class Player extends Entity {
             }
             if (current_held_keys.has('KeyW')) {
                 this.input_vel_y += this.move_velocity;
+            }
+            if (current_held_keys.has('KeyS')) {
+                this.input_vel_y -= this.move_velocity;
             }
         }
     }

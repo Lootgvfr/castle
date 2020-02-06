@@ -2,6 +2,7 @@ import { LEVELS } from "./levels";
 import { Player } from "./characters/player";
 import { DisplayData, scale_coordinate } from "./base/display_component";
 import { CONSTANTS } from "./config/constants";
+import { OBJECTS } from "./objects";
 
 class GameState {
     player;
@@ -23,11 +24,18 @@ class GameState {
             throw `Unknown level "${level}"`;
         }
 
-        this.player = new Player({
-            pos_x: level.player.pos_x,
-            pos_y: level.player.pos_y
+        this.player = new Player(level.player.constructor_data);
+
+        this.objects = [];
+        let object_class;
+        level.objects.forEach((obj) => {
+            object_class = OBJECTS[obj.slug];
+            if (object_class) {
+                this.objects.push(new object_class(obj.constructor_data));
+            }
         });
 
+        this.units = [];
         this.draw_background(level.background);
     }
 
@@ -46,13 +54,22 @@ class GameState {
 
     update (game_clock_time) {
         /* Update the state of all entities in the game */
-        this.player.update(this, game_clock_time);
+        this.player.update(this, game_clock_time, []);
+
+        this.objects.forEach((obj) => {
+            obj.update(this, game_clock_time, []);
+        });
     }
 
     draw () {
         /* Draw all entities in the game */
         this.clear_canvas('main');
+
         this.player.draw();
+
+        this.objects.forEach((obj) => {
+            obj.draw();
+        });
     }
 
     clear_canvas (canvas_slug) {
