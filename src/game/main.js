@@ -23,6 +23,8 @@ let accumulated_time = 0;
 let canvases = {};
 let canvas_scale = 1;
 
+let current_held_keys = new Set();
+
 // =================== INTERFACE ==================
 
 function change_game_status (new_state) {
@@ -79,6 +81,8 @@ export {
     game_status,
     canvases,
     canvas_scale,
+    current_held_keys,
+
     change_game_status,
     start_game
 };

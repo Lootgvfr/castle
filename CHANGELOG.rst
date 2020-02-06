@@ -1,10 +1,18 @@
 TODO long-term
 ==============
-* gravity & collisions
+* collisions handling
+* gravity
+* animations engine
 
 TODO next
 =========
-* controls
+* collisions calculation
+
+0.0.4 - 2020-02-06
+------------------
+* controls for player
+* separate input and general velocity
+* invert Y scale
 
 0.0.3 - 2020-02-05
 ------------------

@@ -36,12 +36,12 @@ class GameState {
         const background = new DisplayData({
             display_type: background_config.type,
             color: background_config.color,
-            width: CONSTANTS.width - 2,
+            width: CONSTANTS.width,
             height: CONSTANTS.height - 1,
             filled: false,
             canvas_slug: 'background'
         });
-        background.draw(1, 0);
+        background.draw(0, 1);
     }
 
     update (game_clock_time) {
@@ -60,8 +60,8 @@ class GameState {
         ctx.clearRect(
             0,
             0,
-            scale_coordinate(CONSTANTS.width),
-            scale_coordinate(CONSTANTS.height)
+            scale_coordinate(CONSTANTS.width, false),
+            scale_coordinate(CONSTANTS.height, false)
         );
     }
 }

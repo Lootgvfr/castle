@@ -1,4 +1,4 @@
-import { canvases, canvas_scale } from "../main";
+import {canvases, canvas_scale, CONSTANTS} from "../main";
 
 class DisplayData {
     is_displayed; // should the element be drawn
@@ -42,19 +42,19 @@ class DisplayData {
                 if (this.filled) {
                     ctx.fillStyle = this.color;
                     ctx.fillRect(
-                        scale_coordinate(pos_x),
-                        scale_coordinate(pos_y),
-                        scale_coordinate(this.width),
-                        scale_coordinate(this.height)
+                        scale_coordinate(pos_x, false),
+                        scale_coordinate(pos_y + this.height, true),
+                        scale_coordinate(this.width, false),
+                        scale_coordinate(this.height, false)
                     );
                 } else {
                     ctx.strokeStyle = this.color;
                     ctx.beginPath();
                     ctx.rect(
-                        scale_coordinate(pos_x),
-                        scale_coordinate(pos_y),
-                        scale_coordinate(this.width),
-                        scale_coordinate(this.height)
+                        scale_coordinate(pos_x, false),
+                        scale_coordinate(pos_y + this.height, true),
+                        scale_coordinate(this.width, false),
+                        scale_coordinate(this.height, false)
                     );
                     ctx.stroke();
                 }
@@ -63,9 +63,14 @@ class DisplayData {
     }
 }
 
-function scale_coordinate (coord) {
-    /* Returns value of the coordinate scaled to the canvas size */
-    return coord * canvas_scale;
+function scale_coordinate (coord, invert) {
+    /* Returns value of the coordinate scaled to the canvas size
+     * Pass invert = true to invert the value on the scale (val = max - val) */
+    let val = coord * canvas_scale;
+    if (invert) {
+        val = CONSTANTS.height * canvas_scale - val;
+    }
+    return val;
 }
 
 export { DisplayData, scale_coordinate };

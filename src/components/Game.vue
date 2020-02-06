@@ -17,7 +17,7 @@
 </template>
 
 <script>
-    import { LAYERS, CONSTANTS, start_game } from '../game/main';
+    import { LAYERS, CONSTANTS, start_game, current_held_keys } from '../game/main';
 
     export default {
         name: "Game",
@@ -44,6 +44,16 @@
                         layer.visible_height = Math.floor(max_width / CONSTANTS.scale);
                     }
                 });
+            });
+
+            document.addEventListener('keydown', function (event) {
+                current_held_keys.add(event.code);
+                console.log(current_held_keys);
+            });
+
+            document.addEventListener('keyup', function (event) {
+                current_held_keys.delete(event.code);
+                console.log(current_held_keys);
             });
 
             this.$nextTick().then(() => {

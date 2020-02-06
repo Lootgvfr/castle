@@ -29,7 +29,7 @@ export default {
     text-align: center;
     color: #2c3e50;
     height: 100%;
-    width: 90%;
-    padding: 0 5%;
+    width: 86%;
+    padding: 0 7%;
   }
 </style>
