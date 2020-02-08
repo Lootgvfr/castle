@@ -8,6 +8,10 @@ TODO next
 =========
 * collisions calculation
 
+0.0.6 - 2020-02-08
+------------------
+* create base classes for character and object
+
 0.0.5 - 2020-02-06
 ------------------
 * create ground class

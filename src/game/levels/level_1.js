@@ -6,7 +6,7 @@ export default {
             pos_y: 0
         },
     },
-    units: [],
+    characters: [],
     objects: [
         {
             slug: 'ground',

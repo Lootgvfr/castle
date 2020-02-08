@@ -7,7 +7,7 @@ import { OBJECTS } from "./objects";
 class GameState {
     player;
     objects;
-    units;
+    characters;
     time_step;
     canvases;
 
@@ -35,7 +35,7 @@ class GameState {
             }
         });
 
-        this.units = [];
+        this.characters = [];
         this.draw_background(level.background);
     }
 

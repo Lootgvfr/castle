@@ -1,7 +1,7 @@
-import { Entity } from '../base/entity';
 import { current_held_keys } from "../main";
+import { Character } from "../base/character";
 
-class Player extends Entity {
+class Player extends Character {
     type = 'player';
     is_controllable = true;
     is_standing = true;

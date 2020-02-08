@@ -1,6 +1,6 @@
-import { Entity } from "../base/entity";
+import { ObjectEntity } from "../base/object";
 
-class Ground extends Entity {
+class Ground extends ObjectEntity {
     type = 'ground';
 
     constructor(
@@ -24,8 +24,6 @@ class Ground extends Entity {
             }
         );
     }
-
-    update(game_state, game_clock_time, collisions) {}
 }
 
 export { Ground };
