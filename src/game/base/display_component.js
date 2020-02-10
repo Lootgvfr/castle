@@ -1,6 +1,6 @@
-import {canvases, canvas_scale, CONSTANTS} from "../main";
+import { canvases, canvas_scale, CONSTANTS } from "../main";
 
-class DisplayData {
+class DisplayComponent {
     is_displayed; // should the element be drawn
     canvas_slug; // slug of the canvas to be drawn on
 
@@ -73,4 +73,4 @@ function scale_coordinate (coord, invert) {
     return val;
 }
 
-export { DisplayData, scale_coordinate };
+export { DisplayComponent, scale_coordinate };

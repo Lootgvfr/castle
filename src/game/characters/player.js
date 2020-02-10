@@ -15,26 +15,31 @@ class Player extends Character {
     ) {
         super(
             {
-                display_data: {
+                display_data: [{
                     width: 15,
                     height: 40,
                     color: 'blue'
-                },
+                }],
+                collision_boxes: [{
+                    width: 15,
+                    height: 40
+                }],
                 pos_x: pos_x,
                 pos_y: pos_y
             }
         );
     }
 
-    update(game_state, game_clock_time, collisions) {
+    update (game_state, game_clock_time, collisions) {
         this.process_inputs();
         super.update(game_state, game_clock_time, collisions);
     }
 
-    process_inputs() {
+    process_inputs () {
         if (this.is_controllable) {
             this.is_standing = !current_held_keys.has('KeyS');
-            this.display_data.height = this.is_standing ? 40: 25;
+            this.display_data[0].height = this.is_standing ? 40: 25;
+            this.collision_boxes[0].height = this.is_standing ? 40: 25;
 
             this.input_vel_x = 0;
             this.input_vel_y = 0;

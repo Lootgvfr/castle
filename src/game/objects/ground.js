@@ -13,12 +13,16 @@ class Ground extends ObjectEntity {
     ) {
         super(
             {
-                display_data: {
+                display_data: [{
                     width: width,
                     height: height,
                     color: 'black',
                     canvas_slug: 'static'
-                },
+                }],
+                collision_boxes: [{
+                    width: width,
+                    height: height
+                }],
                 pos_x: pos_x,
                 pos_y: pos_y
             }

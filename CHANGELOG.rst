@@ -8,6 +8,12 @@ TODO next
 =========
 * collisions calculation
 
+0.0.7 - 2020-02-10
+------------------
+* collision box class
+* update all base classes to create and store collision boxes
+* create option to draw collision boxes
+
 0.0.6 - 2020-02-08
 ------------------
 * create base classes for character and object

@@ -1,7 +1,8 @@
 const CONSTANTS = {
     scale: 16 / 9,
     width: 800,
-    updates_per_second: 60
+    updates_per_second: 60,
+    draw_collision_boxes: true
 };
 
 CONSTANTS.height = CONSTANTS.width / CONSTANTS.scale;

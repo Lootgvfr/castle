@@ -3,7 +3,8 @@ import { Entity } from "./entity";
 class Character extends Entity {
     constructor(
         {
-            display_data = {},
+            display_data = [],
+            collision_boxes = [],
             pos_x = 0,
             pos_y = 0,
         }
@@ -11,6 +12,7 @@ class Character extends Entity {
         super(
             {
                 display_data: display_data,
+                collision_boxes: collision_boxes,
                 pos_x: pos_x,
                 pos_y: pos_y
             }

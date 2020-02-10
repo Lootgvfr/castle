@@ -1,6 +1,6 @@
 import { LEVELS } from "./levels";
 import { Player } from "./characters/player";
-import { DisplayData, scale_coordinate } from "./base/display_component";
+import { DisplayComponent, scale_coordinate } from "./base/display_component";
 import { CONSTANTS } from "./config/constants";
 import { OBJECTS } from "./objects";
 
@@ -41,7 +41,7 @@ class GameState {
 
     draw_background (background_config) {
         /* Draw background of the level */
-        const background = new DisplayData({
+        const background = new DisplayComponent({
             display_type: background_config.type,
             color: background_config.color,
             width: CONSTANTS.width,
