@@ -1,11 +1,14 @@
-TODO long-term
-==============
-* collisions handling
-* gravity
+TODO later
+==========
 * animations engine
 
 TODO next
 =========
+* gravity
+
+0.0.8 - 2020-02-18
+------------------
+* collisions handling
 * collisions calculation
 
 0.0.7 - 2020-02-10

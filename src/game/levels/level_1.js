@@ -35,6 +35,15 @@ export default {
                 height: 50
             }
         },
+        {
+            slug: 'ground',
+            constructor_data: {
+                pos_x: 165,
+                pos_y: 240,
+                width: 10,
+                height: 60
+            }
+        }
     ],
     background: {
         type: 'rectangle',

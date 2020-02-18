@@ -38,9 +38,9 @@ class Player extends Character {
 
     process_inputs () {
         if (this.is_controllable) {
-            this.is_standing = !current_held_keys.has('KeyS');
-            this.display_data[0].height = this.is_standing ? 40: 25;
-            this.collision_boxes[0].height = this.is_standing ? 40: 25;
+            // this.is_standing = !current_held_keys.has('KeyS');
+            // this.display_data[0].height = this.is_standing ? 40: 25;
+            // this.collision_boxes[0].height = this.is_standing ? 40: 25;
 
             this.input_vel_x = 0;
             this.input_vel_y = 0;
@@ -61,7 +61,18 @@ class Player extends Character {
 
     process_collisions (collisions) {
         collisions.forEach((collision) => {
-            console.log(`player collided with ${collision.other_object.type} ${collision.other_object.id} on side ${collision.side}!`);
+            // console.log(`player collided with ${collision.other_object.type} ${collision.other_object.id} on side ${collision.side}!`);
+            if (collision.other_object.type === 'ground') {
+                if (collision.side === 'left') {
+                    this.input_vel_x = Math.max(0, this.input_vel_x);
+                } else if (collision.side === 'right') {
+                    this.input_vel_x = Math.min(0, this.input_vel_x);
+                } else if (collision.side === 'top') {
+                    this.input_vel_y = Math.min(0, this.input_vel_y);
+                } else if (collision.side === 'bottom') {
+                    this.input_vel_y = Math.max(0, this.input_vel_y);
+                }
+            }
         });
     }
 }

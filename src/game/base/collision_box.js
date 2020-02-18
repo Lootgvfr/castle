@@ -61,10 +61,15 @@ class CollisionBox {
         const other_y1 = other_collision_box.pos_y;
         const other_y2 = other_collision_box.pos_y + other_collision_box.height;
 
-        const dxr = this_x2 - other_x1 - Math.abs(other_x2 - this_x1); // how much this box passes into the other on the right
-        const dxl = other_x2 - this_x1 - Math.abs(other_x1 - this_x2); // how much this box passes into the other on the left
-        const dyt = other_y2 - this_y1 - Math.abs(other_y1 - this_y1); // how much this box passes into the other on the top
-        const dyb = this_y2 - other_y1 - Math.abs(other_y1 - this_y1); // how much this box passes into the other on the bottom
+        let dxr = this_x2 - other_x1; // how much this box passes into the other on the right
+        let dxl = other_x2 - this_x1; // how much this box passes into the other on the left
+        let dyt = this_y2 - other_y1; // how much this box passes into the other on the top
+        let dyb = other_y2 - this_y1; // how much this box passes into the other on the bottom
+
+        dxr = dxr > other_collision_box.width ? -1 : dxr;
+        dxl = dxl > other_collision_box.width ? -1 : dxl;
+        dyt = dyt > other_collision_box.height ? -1 : dyt;
+        dyb = dyb > other_collision_box.height ? -1 : dyb;
 
         if (dxl < 0 && dxr < 0 && dyt < 0 && dyb < 0) {
             // no passing on either of the sides
@@ -76,8 +81,10 @@ class CollisionBox {
             return 'right';
         }
 
-        if (dxr >= 0 && dxl >= 0) {
-            // horizontally this box is inside the other one
+        const is_other_inside_horizontally = other_x1 >= this_x1 && other_x2 <= this_x2;
+
+        if (dxr >= 0 && dxl >= 0 || is_other_inside_horizontally) {
+            // horizontally one of the boxes is inside of another
             if (dyt >= 0) {
                 return 'top';
             } else if (dyb >= 0) {
@@ -86,8 +93,10 @@ class CollisionBox {
             return null;
         }
 
-        if (dyt >= 0 && dyb >= 0) {
-            // vertically this box is inside the other one
+        const is_other_inside_vertically = other_y1 >= this_y1 && other_y2 <= this_y2;
+
+        if (dyt >= 0 && dyb >= 0 || is_other_inside_vertically) {
+            // vertically one of the boxes is inside of another
             if (dxr >= 0) {
                 return 'right';
             } else if (dxl >= 0) {
