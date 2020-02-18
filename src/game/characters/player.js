@@ -32,6 +32,7 @@ class Player extends Character {
 
     update (game_state, game_clock_time, collisions) {
         this.process_inputs();
+        this.process_collisions(collisions);
         super.update(game_state, game_clock_time, collisions);
     }
 
@@ -56,6 +57,12 @@ class Player extends Character {
                 this.input_vel_y -= this.move_velocity;
             }
         }
+    }
+
+    process_collisions (collisions) {
+        collisions.forEach((collision) => {
+            console.log(`player collided with ${collision.other_object.type} ${collision.other_object.id} on side ${collision.side}!`);
+        });
     }
 }
 

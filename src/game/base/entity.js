@@ -2,6 +2,7 @@ import { DisplayComponent, scale_coordinate } from "./display_component";
 import { CONSTANTS } from "../config/constants";
 import { CollisionBox } from "./collision_box";
 import { canvases } from "../main";
+import crypto from "crypto";
 
 class Entity {
     // Entity type. Possible values:
@@ -10,6 +11,7 @@ class Entity {
     // - npc
     // - ground
     type;
+    id; // unique ID of the entity
 
     display_data; // list of DisplayComponent instances
     collision_boxes; // list of CollisionBox instances
@@ -46,6 +48,8 @@ class Entity {
         this.pos_y = pos_y;
         this.vel_x = vel_x;
         this.vel_y = vel_y;
+
+        this.id = crypto.randomBytes(20).toString('hex');
     }
 
     update (game_state, game_clock_time, collisions) {

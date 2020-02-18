@@ -1,3 +1,10 @@
+const REVERSE_SIDES = {
+    left: 'right',
+    right: 'left',
+    top: 'bottom',
+    bottom: 'top'
+};
+
 class CollisionBox {
     is_active; // should the collisions be calculated with this element
 
@@ -40,27 +47,81 @@ class CollisionBox {
         return this.entity.pos_y + this.offset_y;
     }
 
-    collision_type (other_collision_box) {
+    collision_side (other_collision_box, calculate_side) {
         /* Calculates collision status between this box and the given box
          * Returns null if there's no collision, otherwise - value
          * 'left', 'right', 'bottom', 'top' */
-        let pos_x = this.pos_x;
-        let pos_y = this.pos_y;
-        let other_pos_x = other_collision_box.pos_x;
-        let other_pos_y = other_collision_box.pos_y;
-        if (pos_x + this.width >= other_pos_x) {
+        // TODO optimize this first part?
+        const this_x1 = this.pos_x;
+        const this_x2 = this.pos_x + this.width;
+        const this_y1 = this.pos_y;
+        const this_y2 = this.pos_y + this.height;
+        const other_x1 = other_collision_box.pos_x;
+        const other_x2 = other_collision_box.pos_x + other_collision_box.width;
+        const other_y1 = other_collision_box.pos_y;
+        const other_y2 = other_collision_box.pos_y + other_collision_box.height;
+
+        const dxr = this_x2 - other_x1 - Math.abs(other_x2 - this_x1); // how much this box passes into the other on the right
+        const dxl = other_x2 - this_x1 - Math.abs(other_x1 - this_x2); // how much this box passes into the other on the left
+        const dyt = other_y2 - this_y1 - Math.abs(other_y1 - this_y1); // how much this box passes into the other on the top
+        const dyb = this_y2 - other_y1 - Math.abs(other_y1 - this_y1); // how much this box passes into the other on the bottom
+
+        if (dxl < 0 && dxr < 0 && dyt < 0 && dyb < 0) {
+            // no passing on either of the sides
+            return null;
+        }
+
+        if (!calculate_side && (dxl >= 0 || dxr >= 0 || dyt >= 0 || dyb >= 0)) {
+            // return right side by default if no need to calculate side and there is any collision
             return 'right';
         }
-        if (pos_x <= other_pos_x + other_collision_box.width) {
-            return 'left';
+
+        if (dxr >= 0 && dxl >= 0) {
+            // horizontally this box is inside the other one
+            if (dyt >= 0) {
+                return 'top';
+            } else if (dyb >= 0) {
+                return 'bottom';
+            }
+            return null;
         }
-        if (pos_y + this.height >= other_pos_y) {
-            return 'top';
+
+        if (dyt >= 0 && dyb >= 0) {
+            // vertically this box is inside the other one
+            if (dxr >= 0) {
+                return 'right';
+            } else if (dxl >= 0) {
+                return 'left';
+            }
+            return null;
         }
-        if (pos_y <= other_pos_y + other_collision_box.height) {
-            return 'bottom';
+
+        if (dxr >= 0 && dyt >= 0) {
+            // right-top corner collision
+            // return whichever side collided less
+            return dxr > dyt ? 'top' : 'right';
         }
+
+        if (dxr >= 0 && dyb >= 0) {
+            // right-bottom corner collision
+            return dxr > dyb ? 'bottom' : 'right';
+        }
+
+        if (dxl >= 0 && dyt >= 0) {
+            // left-top corner collision
+            return dxl > dyt ? 'top' : 'left';
+        }
+
+        if (dxl >= 0 && dyb >= 0) {
+            // left-bottom corner collision
+            return dxl > dyb ? 'bottom' : 'left';
+        }
+
         return null;
+    }
+
+    reverse_collision_side (collision_side) {
+        return REVERSE_SIDES[collision_side];
     }
 }
 
