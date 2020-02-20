@@ -120,19 +120,19 @@ class GameState {
     _calculate_collisions (first_box, second_box, collisions, calculate_side) {
         /* Calculates collisions between given boxes and adds them to the relevant lists */
         if (first_box.is_active && second_box.is_active) {
-            let collision_side = first_box.collision_side(second_box, calculate_side);
-            if (collision_side) {
+            let collision_details = first_box.collision_details(second_box, calculate_side);
+            if (collision_details) {
                 collisions[first_box.entity.id].push({
                     own_box: first_box,
                     other_object: second_box.entity,
                     other_box: second_box,
-                    side: collision_side
+                    details: collision_details
                 });
                 collisions[second_box.entity.id].push({
                     own_box: second_box,
                     other_object: first_box.entity,
                     other_box: first_box,
-                    side: second_box.reverse_collision_side(collision_side)
+                    details: second_box.reverse_collision_side(collision_details)
                 });
             }
         }

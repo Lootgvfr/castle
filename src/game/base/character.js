@@ -29,13 +29,13 @@ class Character extends Entity {
             //             ${collision.other_object.type} ${collision.other_object.id}
             //             on side ${collision.side}!`);
             if (collision.other_object.type === 'ground') {
-                if (collision.side === 'left') {
+                if (collision.details.side === 'left') {
                     this.input_vel_x = Math.max(0, this.input_vel_x);
-                } else if (collision.side === 'right') {
+                } else if (collision.details.side === 'right') {
                     this.input_vel_x = Math.min(0, this.input_vel_x);
-                } else if (collision.side === 'top') {
+                } else if (collision.details.side === 'top') {
                     this.vel_y = Math.min(0, this.vel_y);
-                } else if (collision.side === 'bottom') {
+                } else if (collision.details.side === 'bottom') {
                     this.vel_y = Math.max(0, this.vel_y);
                     this.in_air = false;
                 }
