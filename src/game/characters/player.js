@@ -6,6 +6,7 @@ class Player extends Character {
     is_controllable = true;
     is_standing = true;
     move_velocity = 200;
+    jump_velocity = 400;
 
     constructor(
         {
@@ -32,15 +33,14 @@ class Player extends Character {
 
     update (game_state, game_clock_time, collisions) {
         this.process_inputs();
-        this.process_collisions(collisions);
         super.update(game_state, game_clock_time, collisions);
     }
 
     process_inputs () {
         if (this.is_controllable) {
-            // this.is_standing = !current_held_keys.has('KeyS');
-            // this.display_data[0].height = this.is_standing ? 40: 25;
-            // this.collision_boxes[0].height = this.is_standing ? 40: 25;
+            this.is_standing = !current_held_keys.has('KeyS') || this.in_air;
+            this.display_data[0].height = this.is_standing ? 40: 25;
+            this.collision_boxes[0].height = this.is_standing ? 40: 25;
 
             this.input_vel_x = 0;
             this.input_vel_y = 0;
@@ -50,30 +50,10 @@ class Player extends Character {
             if (current_held_keys.has('KeyA')) {
                 this.input_vel_x -= this.move_velocity;
             }
-            if (current_held_keys.has('KeyW')) {
-                this.input_vel_y += this.move_velocity;
-            }
-            if (current_held_keys.has('KeyS')) {
-                this.input_vel_y -= this.move_velocity;
+            if (current_held_keys.has('KeyW') && !this.in_air) {
+                this.vel_y = this.jump_velocity;
             }
         }
-    }
-
-    process_collisions (collisions) {
-        collisions.forEach((collision) => {
-            // console.log(`player collided with ${collision.other_object.type} ${collision.other_object.id} on side ${collision.side}!`);
-            if (collision.other_object.type === 'ground') {
-                if (collision.side === 'left') {
-                    this.input_vel_x = Math.max(0, this.input_vel_x);
-                } else if (collision.side === 'right') {
-                    this.input_vel_x = Math.min(0, this.input_vel_x);
-                } else if (collision.side === 'top') {
-                    this.input_vel_y = Math.min(0, this.input_vel_y);
-                } else if (collision.side === 'bottom') {
-                    this.input_vel_y = Math.max(0, this.input_vel_y);
-                }
-            }
-        });
     }
 }
 

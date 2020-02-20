@@ -66,6 +66,11 @@ class CollisionBox {
         let dyt = this_y2 - other_y1; // how much this box passes into the other on the top
         let dyb = other_y2 - this_y1; // how much this box passes into the other on the bottom
 
+        if (!calculate_side && (dxl >= 0 && dxr >= 0 && dyt >= 0 && dyb >= 0)) {
+            // return right side by default if no need to calculate side and there is any collision
+            return 'right';
+        }
+
         dxr = dxr > other_collision_box.width ? -1 : dxr;
         dxl = dxl > other_collision_box.width ? -1 : dxl;
         dyt = dyt > other_collision_box.height ? -1 : dyt;
@@ -74,11 +79,6 @@ class CollisionBox {
         if (dxl < 0 && dxr < 0 && dyt < 0 && dyb < 0) {
             // no passing on either of the sides
             return null;
-        }
-
-        if (!calculate_side && (dxl >= 0 || dxr >= 0 || dyt >= 0 || dyb >= 0)) {
-            // return right side by default if no need to calculate side and there is any collision
-            return 'right';
         }
 
         const is_other_inside_horizontally = other_x1 >= this_x1 && other_x2 <= this_x2;

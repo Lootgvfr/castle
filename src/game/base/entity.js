@@ -19,8 +19,9 @@ class Entity {
     pos_y; // Y axis position
     vel_x; // X axis velocity
     vel_y; // Y axis velocity
-    input_vel_x = 0; // X axis velocity from player controls
-    input_vel_y = 0; // Y axis velocity from player controls
+    input_vel_x = 0; // X axis velocity from controls
+    input_vel_y = 0; // Y axis velocity from controls
+    apply_gravity = false;
 
     constructor(
         {
@@ -54,7 +55,9 @@ class Entity {
 
     update (game_state, game_clock_time, collisions) {
         /* Update entity state for the next step */
+        this.process_collisions(collisions);
         this.update_position();
+        this.update_velocity();
     }
 
     update_position () {
@@ -70,6 +73,12 @@ class Entity {
             this.pos_y = CONSTANTS.height;
         } else if (this.pos_y < 0) {
             this.pos_y = 0;
+        }
+    }
+
+    update_velocity () {
+        if (this.apply_gravity) {
+            this.vel_y += CONSTANTS.gravity / CONSTANTS.updates_per_second;
         }
     }
 
@@ -93,6 +102,8 @@ class Entity {
             })
         }
     }
+
+    process_collisions () {}
 }
 
 export { Entity };

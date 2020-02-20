@@ -4,7 +4,14 @@ TODO later
 
 TODO next
 =========
+* improve collision to calculate one frame ahead to prevent clipping
+* add portal in the end
+
+0.0.9 - 2020-02-20
+------------------
+* optimize collision calculation slightly
 * gravity
+* jump
 
 0.0.8 - 2020-02-18
 ------------------
