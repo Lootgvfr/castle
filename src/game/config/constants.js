@@ -3,7 +3,7 @@ const CONSTANTS = {
     width: 800,
     updates_per_second: 60,
     draw_collision_boxes: true,
-    gravity: -1000
+    gravity: -1500
 };
 
 CONSTANTS.height = CONSTANTS.width / CONSTANTS.scale;

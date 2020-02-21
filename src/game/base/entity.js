@@ -21,6 +21,10 @@ class Entity {
     vel_y; // Y axis velocity
     input_vel_x = 0; // X axis velocity from controls
     input_vel_y = 0; // Y axis velocity from controls
+    max_vel_x = Infinity;
+    max_vel_y = Infinity;
+    min_vel_x = -Infinity;
+    min_vel_y = -Infinity;
     apply_gravity = false;
 
     constructor(
@@ -60,10 +64,30 @@ class Entity {
         this.update_velocity();
     }
 
+    get actual_vel_x () {
+        /* return actual X velocity that will be used (per second) */
+        return Math.max(this.min_vel_x, Math.min(this.vel_x + this.input_vel_x, this.max_vel_x));
+    }
+
+    get actual_vel_y () {
+        /* return actual Y velocity that will be used (per second) */
+        return Math.max(this.min_vel_y, Math.min(this.vel_y + this.input_vel_y, this.max_vel_y));
+    }
+
+    get normalized_vel_x () {
+        /* return actual X velocity that will be used (per frame) */
+        return this.actual_vel_x / CONSTANTS.updates_per_second;
+    }
+
+    get normalized_vel_y () {
+        /* return actual Y velocity that will be used (per frame) */
+        return this.actual_vel_y / CONSTANTS.updates_per_second;
+    }
+
     update_position () {
         /* Update position of the entity */
-        this.pos_x += (this.vel_x + this.input_vel_x) / CONSTANTS.updates_per_second;
-        this.pos_y += (this.vel_y + this.input_vel_y) / CONSTANTS.updates_per_second;
+        this.pos_x += this.normalized_vel_x;
+        this.pos_y += this.normalized_vel_y;
         if (this.pos_x > CONSTANTS.width) {
             this.pos_x = CONSTANTS.width;
         } else if (this.pos_x < 0) {

@@ -4,8 +4,12 @@ TODO later
 
 TODO next
 =========
-* improve collision to calculate one frame ahead to prevent clipping
+* improve collisions to prevent clipping corners when falling
 * add portal in the end
+
+0.0.10 - 2020-02-21
+-------------------
+* calculate one frame ahead in collisions
 
 0.0.9 - 2020-02-20
 ------------------

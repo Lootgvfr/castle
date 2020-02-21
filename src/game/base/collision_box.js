@@ -52,55 +52,57 @@ class CollisionBox {
          * Returns null if there's no collision, otherwise - value
          * 'left', 'right', 'bottom', 'top' */
         // TODO optimize this first part?
-        const this_x1 = this.pos_x;
-        const this_x2 = this.pos_x + this.width;
-        const this_y1 = this.pos_y;
-        const this_y2 = this.pos_y + this.height;
+        const vel_x = this.entity.normalized_vel_x;
+        const vel_y = this.entity.normalized_vel_y;
+        const this_x1_new = this.pos_x + vel_x;
+        const this_x2_new = this.pos_x + this.width + vel_x;
+        const this_y1_new = this.pos_y + vel_y;
+        const this_y2_new = this.pos_y + this.height + vel_y;
         const other_x1 = other_collision_box.pos_x;
         const other_x2 = other_collision_box.pos_x + other_collision_box.width;
         const other_y1 = other_collision_box.pos_y;
         const other_y2 = other_collision_box.pos_y + other_collision_box.height;
 
-        let dxr = this_x2 - other_x1; // how much this box passes into the other on the right
-        let dxl = other_x2 - this_x1; // how much this box passes into the other on the left
-        let dyt = this_y2 - other_y1; // how much this box passes into the other on the top
-        let dyb = other_y2 - this_y1; // how much this box passes into the other on the bottom
+        let dxr = this_x2_new - other_x1; // how much this box passes into the other on the right
+        let dxl = other_x2 - this_x1_new; // how much this box passes into the other on the left
+        let dyt = this_y2_new - other_y1; // how much this box passes into the other on the top
+        let dyb = other_y2 - this_y1_new; // how much this box passes into the other on the bottom
 
         if (!calculate_side && (dxl >= 0 && dxr >= 0 && dyt >= 0 && dyb >= 0)) {
             // return right side by default if no need to calculate side and there is any collision
             return { side: 'right', distance: 0 };
         }
 
-        dxr = dxr > other_collision_box.width ? -1 : dxr;
-        dxl = dxl > other_collision_box.width ? -1 : dxl;
-        dyt = dyt > other_collision_box.height ? -1 : dyt;
-        dyb = dyb > other_collision_box.height ? -1 : dyb;
+        dxr = dxr > Math.max(other_collision_box.width, vel_x) ? -1 : dxr;
+        dxl = dxl > Math.max(other_collision_box.width, -vel_x) ? -1 : dxl;
+        dyt = dyt > Math.max(other_collision_box.height, vel_y) ? -1 : dyt;
+        dyb = dyb > Math.max(other_collision_box.height, -vel_y) ? -1 : dyb;
 
         if (dxl < 0 && dxr < 0 && dyt < 0 && dyb < 0) {
             // no passing on either of the sides
             return null;
         }
 
-        const is_other_inside_horizontally = other_x1 >= this_x1 && other_x2 <= this_x2;
+        const is_other_inside_horizontally = other_x1 >= this_x1_new && other_x2 <= this_x2_new;
 
         if (dxr >= 0 && dxl >= 0 || is_other_inside_horizontally) {
             // horizontally one of the boxes is inside of another
             if (dyt >= 0) {
-                return { side: 'top', distance: 0 };
+                return { side: 'top', distance: Math.max(0, vel_y - dyt) };
             } else if (dyb >= 0) {
-                return { side: 'bottom', distance: 0 };
+                return { side: 'bottom', distance: Math.max(0, -vel_y - dyb) };
             }
             return null;
         }
 
-        const is_other_inside_vertically = other_y1 >= this_y1 && other_y2 <= this_y2;
+        const is_other_inside_vertically = other_y1 >= this_y1_new && other_y2 <= this_y2_new;
 
         if (dyt >= 0 && dyb >= 0 || is_other_inside_vertically) {
             // vertically one of the boxes is inside of another
             if (dxr >= 0) {
-                return { side: 'right', distance: 0 };
+                return { side: 'right', distance: Math.max(0, vel_x - dxr) };
             } else if (dxl >= 0) {
-                return { side: 'left', distance: 0 };
+                return { side: 'left', distance: Math.max(0, -vel_x - dxl) };
             }
             return null;
         }
@@ -108,22 +110,38 @@ class CollisionBox {
         if (dxr >= 0 && dyt >= 0) {
             // right-top corner collision
             // return whichever side collided less
-            return dxr > dyt ? { side: 'top', distance: 0 } : { side: 'right', distance: 0 };
+            if (dxr > dyt) {
+                return { side: 'top', distance: Math.max(0, vel_y - dyt) };
+            } else {
+                return { side: 'right', distance: Math.max(0, vel_x - dxr) }
+            }
         }
 
         if (dxr >= 0 && dyb >= 0) {
             // right-bottom corner collision
-            return dxr > dyb ? { side: 'bottom', distance: 0 } : { side: 'right', distance: 0 };
+            if (dxr > dyb) {
+                return { side: 'bottom', distance: Math.max(0, -vel_y - dyb) };
+            } else {
+                return { side: 'right', distance: Math.max(0, vel_x - dxr) };
+            }
         }
 
         if (dxl >= 0 && dyt >= 0) {
             // left-top corner collision
-            return dxl > dyt ? { side: 'top', distance: 0 } : { side: 'left', distance: 0 };
+            if (dxl > dyt) {
+                return { side: 'top', distance: Math.max(0, vel_y - dyt) };
+            } else {
+                return { side: 'left', distance: Math.max(0, -vel_x - dxl) };
+            }
         }
 
         if (dxl >= 0 && dyb >= 0) {
             // left-bottom corner collision
-            return dxl > dyb ? { side: 'bottom', distance: 0 } : { side: 'left', distance: 0 };
+            if (dxl > dyb) {
+                return { side: 'bottom', distance: Math.max(0, -vel_y - dyb) };
+            } else {
+                return { side: 'left', distance: Math.max(0, -vel_x - dxl) };
+            }
         }
 
         return null;
