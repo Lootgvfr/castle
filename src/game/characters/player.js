@@ -6,7 +6,7 @@ class Player extends Character {
     is_controllable = true;
     is_standing = true;
     move_velocity = 200;
-    jump_velocity = 600;
+    jump_velocity = 500;
 
     constructor(
         {

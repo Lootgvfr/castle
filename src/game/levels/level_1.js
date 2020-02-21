@@ -29,7 +29,7 @@ export default {
         {
             slug: 'ground',
             constructor_data: {
-                pos_x: 400,
+                pos_x: 380,
                 pos_y: 0,
                 width: 30,
                 height: 120
@@ -65,7 +65,7 @@ export default {
         {
             slug: 'ground',
             constructor_data: {
-                pos_x: 470,
+                pos_x: 450,
                 pos_y: 0,
                 width: 30,
                 height: 70

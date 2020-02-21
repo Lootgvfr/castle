@@ -107,6 +107,7 @@ class CollisionBox {
             return null;
         }
 
+        // TODO UPDATE THESE CORNER CASES
         if (dxr >= 0 && dyt >= 0) {
             // right-top corner collision
             // return whichever side collided less
