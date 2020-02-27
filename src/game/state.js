@@ -41,6 +41,8 @@ class GameState {
 
     update (game_clock_time) {
         /* Update the state of all entities in the game */
+        this.process_inputs();
+
         const collisions = this.calculate_collisions();
 
         this.player.update(this, game_clock_time, collisions[this.player.id]);
@@ -82,6 +84,19 @@ class GameState {
             scale_coordinate(CONSTANTS.width, false),
             scale_coordinate(CONSTANTS.height, false)
         );
+    }
+
+    process_inputs () {
+        /* Process inputs from player for all entities in the game */
+        this.player.process_inputs();
+
+        this.objects.forEach((obj) => {
+            obj.process_inputs();
+        });
+
+        this.characters.forEach((chr) => {
+            chr.process_inputs();
+        })
     }
 
     calculate_collisions () {

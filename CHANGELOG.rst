@@ -1,11 +1,24 @@
 TODO later
 ==========
-* animations engine
 
-TODO next
-=========
-* improve collisions to prevent clipping corners when falling
+for 0.2.0
+---------
+* animations engine
+* scroll screen
+
+undefined
+---------
+* improve controls to have one-off actions (such as jump) instead of holding
+* add grace-period after falling for a jump
+
+TODO for 0.1.0
+==============
 * add portal in the end
+
+0.0.11 - 2020-02-27
+-------------------
+* improve collisions to prevent clipping corners when falling
+* move input calculations to start of the update
 
 0.0.10 - 2020-02-21
 -------------------

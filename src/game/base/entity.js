@@ -26,6 +26,7 @@ class Entity {
     min_vel_x = -Infinity;
     min_vel_y = -Infinity;
     apply_gravity = false;
+    can_move = false;
 
     constructor(
         {
@@ -60,7 +61,9 @@ class Entity {
     update (game_state, game_clock_time, collisions) {
         /* Update entity state for the next step */
         this.process_collisions(collisions);
-        this.update_position();
+        if (this.can_move) {
+            this.update_position();
+        }
         this.update_velocity();
     }
 
@@ -128,6 +131,8 @@ class Entity {
     }
 
     process_collisions () {}
+
+    process_inputs () {}
 }
 
 export { Entity };

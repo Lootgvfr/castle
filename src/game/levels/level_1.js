@@ -8,7 +8,7 @@ export default {
     },
     characters: [],
     objects: [
-        {
+        { // first, low column
             slug: 'ground',
             constructor_data: {
                 pos_x: 200,
@@ -17,7 +17,7 @@ export default {
                 height: 60
             }
         },
-        {
+        { // second, avg column
             slug: 'ground',
             constructor_data: {
                 pos_x: 300,
@@ -26,7 +26,7 @@ export default {
                 height: 80
             }
         },
-        {
+        { // third, tallest column
             slug: 'ground',
             constructor_data: {
                 pos_x: 380,
@@ -35,7 +35,7 @@ export default {
                 height: 120
             }
         },
-        {
+        { // horizontal line above
             slug: 'ground',
             constructor_data: {
                 pos_x: 0,
@@ -44,7 +44,7 @@ export default {
                 height: 10
             }
         },
-        {
+        { // left flying step
             slug: 'ground',
             constructor_data: {
                 pos_x: 250,
@@ -53,7 +53,7 @@ export default {
                 height: 20
             }
         },
-        {
+        { // right flying step
             slug: 'ground',
             constructor_data: {
                 pos_x: 330,
@@ -62,7 +62,7 @@ export default {
                 height: 20
             }
         },
-        {
+        { // last, smaller column
             slug: 'ground',
             constructor_data: {
                 pos_x: 450,
@@ -71,7 +71,7 @@ export default {
                 height: 70
             }
         },
-        {
+        { // vertical line above
             slug: 'ground',
             constructor_data: {
                 pos_x: 165,
@@ -80,7 +80,7 @@ export default {
                 height: 60
             }
         },
-        {
+        { // bottom ground
             slug: 'ground',
             constructor_data: {
                 pos_x: 0,

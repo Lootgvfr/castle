@@ -1,5 +1,6 @@
 import { current_held_keys } from "../main";
 import { Character } from "../base/character";
+import { CONSTANTS } from "../main";
 
 class Player extends Character {
     type = 'player';
@@ -32,7 +33,6 @@ class Player extends Character {
     }
 
     update (game_state, game_clock_time, collisions) {
-        this.process_inputs();
         super.update(game_state, game_clock_time, collisions);
     }
 

@@ -111,7 +111,7 @@ class CollisionBox {
         if (dxr >= 0 && dyt >= 0) {
             // right-top corner collision
             // return whichever side collided less
-            if (dxr > dyt) {
+            if (dxr - vel_x > dyt - vel_y) {
                 return { side: 'top', distance: Math.max(0, vel_y - dyt) };
             } else {
                 return { side: 'right', distance: Math.max(0, vel_x - dxr) }
@@ -120,7 +120,7 @@ class CollisionBox {
 
         if (dxr >= 0 && dyb >= 0) {
             // right-bottom corner collision
-            if (dxr > dyb) {
+            if (dxr - vel_x > dyb + vel_y) {
                 return { side: 'bottom', distance: Math.max(0, -vel_y - dyb) };
             } else {
                 return { side: 'right', distance: Math.max(0, vel_x - dxr) };
@@ -129,7 +129,7 @@ class CollisionBox {
 
         if (dxl >= 0 && dyt >= 0) {
             // left-top corner collision
-            if (dxl > dyt) {
+            if (dxl + vel_x > dyt - vel_y) {
                 return { side: 'top', distance: Math.max(0, vel_y - dyt) };
             } else {
                 return { side: 'left', distance: Math.max(0, -vel_x - dxl) };
@@ -138,7 +138,7 @@ class CollisionBox {
 
         if (dxl >= 0 && dyb >= 0) {
             // left-bottom corner collision
-            if (dxl > dyb) {
+            if (dxl + vel_x > dyb + vel_y) {
                 return { side: 'bottom', distance: Math.max(0, -vel_y - dyb) };
             } else {
                 return { side: 'left', distance: Math.max(0, -vel_x - dxl) };
