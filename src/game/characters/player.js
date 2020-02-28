@@ -1,13 +1,14 @@
 import { current_held_keys } from "../main";
 import { Character } from "../base/character";
-import { CONSTANTS } from "../main";
 
 class Player extends Character {
     type = 'player';
-    is_controllable = true;
-    is_standing = true;
+    is_controllable = true; // can be controlled by player input
+    is_standing = true; // is not crouching
     move_velocity = 200;
     jump_velocity = 500;
+    interact_used; // was an "interact" button pressed on this frame
+    game_state; // reference to the GameState object
 
     constructor(
         {
@@ -33,11 +34,27 @@ class Player extends Character {
     }
 
     update (game_state, game_clock_time, collisions) {
+        this.game_state = game_state;
         super.update(game_state, game_clock_time, collisions);
     }
 
+    process_collisions(collisions) {
+        collisions.forEach((collision) => {
+            if (collision.other_object.type === 'level_transition') {
+                // have collision with a level transition
+                const transition = collision.other_object;
+                if (!transition.require_interact || this.interact_used) {
+                    this.game_state.load_next_level = transition.next_level;
+                }
+            }
+        });
+        super.process_collisions(collisions);
+    }
+
     process_inputs () {
+        this.interact_used = false;
         if (this.is_controllable) {
+            this.interact_used = current_held_keys.has('KeyF') && !this.in_air;
             this.is_standing = !current_held_keys.has('KeyS') || this.in_air;
             this.display_data[0].height = this.is_standing ? 40: 25;
             this.collision_boxes[0].height = this.is_standing ? 40: 25;

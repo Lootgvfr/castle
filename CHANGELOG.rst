@@ -3,7 +3,6 @@ TODO later
 
 for 0.2.0
 ---------
-* animations engine
 * scroll screen
 
 undefined
@@ -11,9 +10,14 @@ undefined
 * improve controls to have one-off actions (such as jump) instead of holding
 * add grace-period after falling for a jump
 
-TODO for 0.1.0
-==============
-* add portal in the end
+TODO next
+=========
+* animations engine
+
+0.1.0 - 2020-02-28
+------------------
+* add level transition object type
+* add level 2
 
 0.0.11 - 2020-02-27
 -------------------

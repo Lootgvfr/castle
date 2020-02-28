@@ -8,6 +8,15 @@ export default {
     },
     characters: [],
     objects: [
+        { // bottom ground
+            slug: 'ground',
+            constructor_data: {
+                pos_x: 0,
+                pos_y: 0,
+                width: 800,
+                height: 5
+            }
+        },
         { // first, low column
             slug: 'ground',
             constructor_data: {
@@ -80,13 +89,14 @@ export default {
                 height: 60
             }
         },
-        { // bottom ground
-            slug: 'ground',
+        { // level transition
+            slug: 'level_transition',
             constructor_data: {
-                pos_x: 0,
-                pos_y: 0,
-                width: 800,
-                height: 5
+                pos_x: 50,
+                pos_y: 310,
+                width: 25,
+                height: 50,
+                next_level: 'level_2'
             }
         }
     ],

@@ -67,8 +67,8 @@ function start_game (c_width) {
             game_state.draw();
 
             document.getElementById('frame-time').innerHTML = frame_time.toString();
-            requestAnimationFrame(loop);
         }
+        requestAnimationFrame(loop);
     }
 
     requestAnimationFrame(loop);

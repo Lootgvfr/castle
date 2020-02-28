@@ -10,19 +10,25 @@ class GameState {
     characters;
     time_step;
     canvases;
+    load_next_level; // which level we need to load
 
     constructor (canvases, level_slug) {
-        this.load_level(level_slug);
         this.time_step = CONSTANTS.update_time;
         this.canvases = canvases;
+        this.load_level(level_slug);
     }
 
     load_level (level_slug) {
         /* Load level config into the current game state */
+        this.load_next_level = null;
         const level = LEVELS[level_slug];
         if (!level) {
             throw `Unknown level "${level}"`;
         }
+
+        this.clear_canvas('main');
+        this.clear_canvas('static');
+        this.clear_canvas('background');
 
         this.player = new Player(level.player.constructor_data);
 
@@ -50,11 +56,16 @@ class GameState {
         this.objects.forEach((obj) => {
             obj.update(this, game_clock_time, collisions[obj.id]);
         });
+
+        if (this.load_next_level) {
+            this.load_level(this.load_next_level);
+        }
     }
 
     draw () {
         /* Draw all entities in the game */
         this.clear_canvas('main');
+        this.clear_canvas('static');
 
         this.player.draw();
 
