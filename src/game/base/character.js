@@ -6,6 +6,9 @@ class Character extends Entity {
     in_air = true;
     can_move = true;
 
+    jump_grace_period_frames = 0;
+    jump_grace_period_counter = 0;
+
     constructor(
         {
             display_data = [],
@@ -30,6 +33,7 @@ class Character extends Entity {
         this.max_vel_y = Infinity;
         this.min_vel_x = -Infinity;
         this.min_vel_y = -Infinity;
+        this.jump_grace_period_counter++;
 
         collisions.forEach((collision) => {
             // console.log(`character of type ${this.type} ${this.id} collided with ${collision.other_object.type} ${collision.other_object.id} on side ${collision.details.side} with distance ${collision.details.distance}!`);
@@ -46,6 +50,7 @@ class Character extends Entity {
                     } else if (collision.details.side === 'bottom') {
                         this.vel_y = Math.max(0, this.vel_y);
                         this.in_air = false;
+                        this.jump_grace_period_counter = 0;
                     }
                 } else {
                     // collision on the next frame

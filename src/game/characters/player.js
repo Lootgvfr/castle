@@ -4,9 +4,11 @@ import { Character } from "../base/character";
 class Player extends Character {
     type = 'player';
     is_controllable = true; // can be controlled by player input
-    is_standing = true; // is not crouching
     move_velocity = 200;
     jump_velocity = 500;
+    jump_grace_period_frames = 2;
+
+    is_standing = true; // is not crouching
     interact_used; // was an "interact" button pressed on this frame
     game_state; // reference to the GameState object
 
@@ -67,8 +69,10 @@ class Player extends Character {
             if (current_held_keys.has('KeyA')) {
                 this.input_vel_x -= this.move_velocity;
             }
-            if (current_held_keys.has('KeyW') && !this.in_air) {
+            if (current_held_keys.has('KeyW') &&
+                (!this.in_air || this.jump_grace_period_counter <= this.jump_grace_period_frames)) {
                 this.vel_y = this.jump_velocity;
+                this.jump_grace_period_counter = this.jump_grace_period_frames + 1;
             }
         }
     }

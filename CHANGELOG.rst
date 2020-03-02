@@ -8,14 +8,17 @@ for 0.2.0
 undefined
 ---------
 * improve controls to have one-off actions (such as jump) instead of holding
-* add grace-period after falling for a jump
 
 TODO next
 =========
 * animations engine
 
-0.1.0 - 2020-02-28
+0.1.1 - 2020-03-02
 ------------------
+* add grace-period after falling for a jump
+
+0.1.0 - 2020-02-28
+==================
 * add level transition object type
 * add level 2
 
