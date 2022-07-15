@@ -66,7 +66,7 @@ function start_game (c_width) {
             // redraw the state on every loop
             game_state.draw();
 
-            document.getElementById('frame-time').innerHTML = frame_time.toString();
+            document.getElementById('frame-time').innerHTML = (window.performance.now() - last_time).toString();
         }
         requestAnimationFrame(loop);
     }
